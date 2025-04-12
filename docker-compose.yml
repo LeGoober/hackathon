@@ -27,7 +27,7 @@ services:
         source: ./docker-compose/mysql/init
         target: /docker-entrypoint-initdb.d
     ports:
-      - 3306:3306
+      - "3307:3306"
   mailhog:
     image: mailhog/mailhog:latest
     restart: always

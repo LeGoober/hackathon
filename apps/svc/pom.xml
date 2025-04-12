@@ -5,8 +5,19 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.4.0</version>
-        <relativePath /> <!-- lookup parent from repository -->
-    </parent>
+        <relativePath /> </parent>
+
+    <groupId>ch.planner</groupId>
+    <artifactId>planner-svc</artifactId>
+    <version>0.0.0-DEV-SNAPSHOT</version>
+    <name>planner-svc</name>
+    <description>Planner backend</description>
+
+    <properties>
+        <java.version>22</java.version>
+        <snakeyaml.version>2.0</snakeyaml.version>
+        <spring-ai.version>1.0.0-M5</spring-ai.version> </properties>
+
     <repositories>
         <repository>
             <id>spring-milestones</id>
@@ -17,24 +28,26 @@
             </snapshots>
         </repository>
     </repositories>
-    <groupId>ch.planner</groupId>
-    <artifactId>planner-svc</artifactId>
-    <version>0.0.0-DEV-SNAPSHOT</version>
-    <name>planner-svc</name>
-    <description>Planner backend</description>
-    <properties>
-        <java.version>22</java.version>
-        <snakeyaml.version>2.0</snakeyaml.version>
-    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
-        <!-- Vulnerability fix for CVE-2024-38819 -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>6.1.15</version>
         </dependency>
 
-        <!-- Spring dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -70,19 +83,18 @@
         <dependency>
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-azure-openai</artifactId>
-            <version>1.0.0-M5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-ollama-spring-boot-starter</artifactId>
         </dependency>
 
-
-
-        <!-- Azure dependencies -->
         <dependency>
             <groupId>com.azure</groupId>
             <artifactId>azure-communication-email</artifactId>
             <version>1.0.18</version>
         </dependency>
 
-        <!-- Third party dependencies -->
         <dependency>
             <groupId>com.github.scribejava</groupId>
             <artifactId>scribejava-apis</artifactId>
@@ -118,11 +130,11 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.16.2</version>
         </dependency>
-	<dependency>
-    		<groupId>com.fasterxml.jackson.dataformat</groupId>
-    		<artifactId>jackson-dataformat-csv</artifactId>
-    		<version>2.15.2</version> <!-- Use the latest version -->
-	</dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-csv</artifactId>
+            <version>2.15.2</version>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
@@ -160,7 +172,6 @@
             <version>0.1.55</version>
         </dependency>
 
-        <!-- Test dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -188,13 +199,13 @@
             <version>5.4.1</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>com.c4-soft.springaddons</groupId>
             <artifactId>spring-addons-oauth2-test</artifactId>
             <version>8.0.0</version>
             <scope>test</scope>
         </dependency>
-        <!-- Resource server -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
@@ -225,18 +236,14 @@
                         <configuration>
                             <inputSpec>${project.basedir}/../../shared/openapi/contract.yml</inputSpec>
                             <generatorName>spring</generatorName>
-
                             <apiPackage>ch.planner.plannersvc.api</apiPackage>
                             <modelPackage>ch.planner.plannersvc.dto</modelPackage>
-
                             <generateModels>true</generateModels>
                             <generateApis>true</generateApis>
                             <generateSupportingFiles>true</generateSupportingFiles>
                             <generateApiDocumentation>false</generateApiDocumentation>
                             <generateApiTests>false</generateApiTests>
-
                             <configOptions>
-                                <!--https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/spring.md-->
                                 <bigDecimalAsString>true</bigDecimalAsString>
                                 <reactive>false</reactive>
                                 <interfaceOnly>true</interfaceOnly>
@@ -245,8 +252,6 @@
                                 <useOptional>true</useOptional>
                                 <useSpringBoot3>true</useSpringBoot3>
                             </configOptions>
-
-                            <!-- see https://stackoverflow.com/a/75986444 for the removeEnumValuePrefix option -->
                             <additionalProperties>removeEnumValuePrefix=false</additionalProperties>
                         </configuration>
                     </execution>

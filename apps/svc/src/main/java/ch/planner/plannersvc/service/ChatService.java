@@ -1,5 +1,9 @@
 package ch.planner.plannersvc.service;
 
+import org.springframework.ai.ollama.OllamaChatModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 @Service
 public class ChatService {
     private final OllamaChatModel chatModel;

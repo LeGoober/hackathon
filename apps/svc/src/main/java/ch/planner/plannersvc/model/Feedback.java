@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeProjectMapping {
+public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,11 +25,9 @@ public class EmployeeProjectMapping {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @ManyToOne
-    @JoinColumn(name = "project_id")
-    private Project project;
+    private String comment;
 
-    private LocalDate assignedDate;
+    private int satisfactionScore;
 
-    private String feedback;
+    private LocalDate submittedDate;
 }

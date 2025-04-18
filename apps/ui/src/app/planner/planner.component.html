@@ -34,4 +34,36 @@
       </tr>
     }
   </table>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Employee</th>
+        <th>Project</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mapping of mappings">
+        <td>{{mapping.employee.name}}</td>
+        <td>{{mapping.project.name}}</td>
+        <td>{{mapping.assignedDate}}</td>
+        <td>
+          <button (click)="removeMapping(mapping.id)">Remove Project Mappings</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <form (ngSubmit)="addMapping(employeeId, projectId, date)">
+    <select #employeeId>
+      <option *ngFor="let emp of employees" [value]="emp.id">{{emp.name}}</option>
+    </select>
+    <select #projectId>
+      <option *ngFor="let proj of projects" [value]="proj.id">{{proj.name}}</option>
+    </select>
+    <input type="date" #date>
+    <button type="submot">Add Project Mapping</button>
+  </form>
 </div>
